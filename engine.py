@@ -419,11 +419,3 @@ class Figure:
                 self.pics3.move(30, 0)
                 self.pics2.move(30, 0)
                 self.pics1.move(30, 0)
-
-
-class Line(pygame.sprite.Sprite):
-    def __init__(self, y):
-        super().__init__(check_group, all_sprites)
-        self.image = line_imege
-        self.rect = self.image.get_rect()
-        self.rect = self.rect.move(15, y)
