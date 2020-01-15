@@ -38,7 +38,6 @@ def start_screen():
 
 box_image = load_image('box.png')
 fon_image = load_image('tetris.png')
-line_imege = load_image('check_line.png')
 
 
 class Fon(pygame.sprite.Sprite):
