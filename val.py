@@ -434,7 +434,7 @@ running = True
 start_screen()
 player_image = load_image('box.png')
 fon_image = load_image('tetris.png')
-next_figure = 'L2'  # random.choice(figures)
+next_figure = random.choice(figures)
 figure = Figure(next_figure)
 next_figure = random.choice(figures)
 fon = Fon()
