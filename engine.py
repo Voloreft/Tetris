@@ -8,6 +8,7 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((400, 500))
 all_sprites = pygame.sprite.Group()
 tiles_group = pygame.sprite.Group()
+check_group = pygame.sprite.Group()
 
 
 def load_image(name, colorkey=None):
@@ -37,6 +38,7 @@ def start_screen():
 
 box_image = load_image('box.png')
 fon_image = load_image('tetris.png')
+line_imege = load_image('check_line.png')
 
 
 class Fon(pygame.sprite.Sprite):
@@ -100,7 +102,7 @@ class Picsel(pygame.sprite.Sprite):
         return False
 
 
-class Figure(pygame.sprite.Sprite):
+class Figure:
     def __init__(self, figure_type):
         self.figure_type = figure_type
         if self.figure_type == 'Z1':
@@ -417,3 +419,11 @@ class Figure(pygame.sprite.Sprite):
                 self.pics3.move(30, 0)
                 self.pics2.move(30, 0)
                 self.pics1.move(30, 0)
+
+
+class Line(pygame.sprite.Sprite):
+    def __init__(self, y):
+        super().__init__(check_group, all_sprites)
+        self.image = line_imege
+        self.rect = self.image.get_rect()
+        self.rect = self.rect.move(15, y)
