@@ -3,7 +3,7 @@ import pygame
 from engine import load_image, start_screen, Fon, Figure, tiles_group, Checking_sistem, all_sprites,Miniature
 
 pygame.init()
-fps = 1
+fps = 1.5
 clock = pygame.time.Clock()
 figures = ['rect', 'I', 'T', 'L1', 'L2', 'Z1', 'Z2']
 screen = pygame.display.set_mode((400, 500))
@@ -31,13 +31,23 @@ while running:
         if event.type == pygame.KEYDOWN and event.key == 274:
             if figure.down():
                 figure = Figure(next_figure)
+                check.check()
                 next_figure = random.choice(figures)
+                if figure.gameover():
+                    running = False
+                    print('Вы проиграли.')
+                    print(f'Ваш счёт:{check.check()}')
+
     screen.fill((0, 0, 0))
-    check.check()
     if figure.down():
         figure = Figure(next_figure)
+        check.check()
         next_figure = random.choice(figures)
         mini.move(next_figure)
+        if figure.gameover():
+            running = False
+            print('Вы проиграли.')
+            print(f'Ваш счёт:{check.check()}')
     tiles_group.draw(screen)
     all_sprites.draw(screen)
     pygame.display.flip()

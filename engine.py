@@ -62,9 +62,8 @@ class Line(pygame.sprite.Sprite):
             for picsel in tiles_group:
                 if picsel.down():
                     redowning.add(picsel)
-            for pic in redowning:
-                if pic.down():
-                    redowning.clear(pic)
+                for pic in redowning:
+                    pic.down()
 
     def bals(self):
         return self.bal
@@ -507,6 +506,11 @@ class Figure:
                 self.pics2.move(30, 0)
                 self.pics1.move(30, 0)
 
+    def gameover(self):
+        go = self.pics4.movecontrol() and self.pics3.movecontrol() and self.pics2.movecontrol() \
+             and self.pics1.movecontrol()
+        return not go
+
 
 class Miniature:
     def __init__(self):
@@ -517,37 +521,37 @@ class Miniature:
 
     def move(self, figure_type):
         if figure_type == 'Z2':
-            self.pics1.move(340,30)
-            self.pics2.move(360,30)
-            self.pics3.move(320,50)
-            self.pics4.move(340,50)
+            self.pics1.move(340, 30)
+            self.pics2.move(360, 30)
+            self.pics3.move(320, 50)
+            self.pics4.move(340, 50)
         if figure_type == 'Z1':
-            self.pics1.move(320,30)
-            self.pics2.move(340,30)
-            self.pics3.move(340,50)
-            self.pics4.move(360,50)
+            self.pics1.move(320, 30)
+            self.pics2.move(340, 30)
+            self.pics3.move(340, 50)
+            self.pics4.move(360, 50)
         if figure_type == 'L2':
-            self.pics1.move(320,30)
-            self.pics2.move(340,30)
-            self.pics3.move(360,30)
-            self.pics4.move(320,50)
+            self.pics1.move(320, 30)
+            self.pics2.move(340, 30)
+            self.pics3.move(360, 30)
+            self.pics4.move(320, 50)
         if figure_type == 'L1':
-            self.pics1.move(320,30)
-            self.pics2.move(340,30)
-            self.pics3.move(360,30)
-            self.pics4.move(360,50)
+            self.pics1.move(320, 30)
+            self.pics2.move(340, 30)
+            self.pics3.move(360, 30)
+            self.pics4.move(360, 50)
         if figure_type == 'T':
-            self.pics1.move(320,30)
-            self.pics2.move(340,30)
-            self.pics3.move(360,30)
-            self.pics4.move(340,50)
+            self.pics1.move(320, 30)
+            self.pics2.move(340, 30)
+            self.pics3.move(360, 30)
+            self.pics4.move(340, 50)
         if figure_type == 'I':
-            self.pics1.move(310,40)
-            self.pics2.move(330,40)
-            self.pics3.move(350,40)
-            self.pics4.move(370,40)
+            self.pics1.move(310, 40)
+            self.pics2.move(330, 40)
+            self.pics3.move(350, 40)
+            self.pics4.move(370, 40)
         if figure_type == 'rect':
-            self.pics1.move(330,30)
-            self.pics2.move(360,30)
-            self.pics3.move(330,50)
-            self.pics4.move(360,50)
+            self.pics1.move(330, 30)
+            self.pics2.move(350, 30)
+            self.pics3.move(330, 50)
+            self.pics4.move(350, 50)
