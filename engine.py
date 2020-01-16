@@ -39,6 +39,7 @@ def start_screen():
 box_image = load_image('box.png')
 fon_image = load_image('tetris.png')
 line_imege = load_image('check_line.png')
+small_box_image = load_image('minibox.png')
 
 
 class Line(pygame.sprite.Sprite):
@@ -173,6 +174,18 @@ class Picsel(pygame.sprite.Sprite):
         return False
 
     def line(self, y):
+        self.rect.y = y
+
+
+class Small_picsel(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__(all_sprites)
+        self.image = small_box_image
+        self.rect = self.image.get_rect()
+        self.rect = self.rect.move(x, y)
+
+    def move(self, x, y):
+        self.rect.x = x
         self.rect.y = y
 
 
@@ -493,3 +506,48 @@ class Figure:
                 self.pics3.move(30, 0)
                 self.pics2.move(30, 0)
                 self.pics1.move(30, 0)
+
+
+class Miniature:
+    def __init__(self):
+        self.pics1 = Small_picsel(-20, -20)
+        self.pics2 = Small_picsel(-20, -20)
+        self.pics3 = Small_picsel(-20, -20)
+        self.pics4 = Small_picsel(-20, -20)
+
+    def move(self, figure_type):
+        if figure_type == 'Z2':
+            self.pics1.move(340,30)
+            self.pics2.move(360,30)
+            self.pics3.move(320,50)
+            self.pics4.move(340,50)
+        if figure_type == 'Z1':
+            self.pics1.move(320,30)
+            self.pics2.move(340,30)
+            self.pics3.move(340,50)
+            self.pics4.move(360,50)
+        if figure_type == 'L2':
+            self.pics1.move(320,30)
+            self.pics2.move(340,30)
+            self.pics3.move(360,30)
+            self.pics4.move(320,50)
+        if figure_type == 'L1':
+            self.pics1.move(320,30)
+            self.pics2.move(340,30)
+            self.pics3.move(360,30)
+            self.pics4.move(360,50)
+        if figure_type == 'T':
+            self.pics1.move(320,30)
+            self.pics2.move(340,30)
+            self.pics3.move(360,30)
+            self.pics4.move(340,50)
+        if figure_type == 'I':
+            self.pics1.move(310,40)
+            self.pics2.move(330,40)
+            self.pics3.move(350,40)
+            self.pics4.move(370,40)
+        if figure_type == 'rect':
+            self.pics1.move(330,30)
+            self.pics2.move(360,30)
+            self.pics3.move(330,50)
+            self.pics4.move(360,50)
