@@ -38,14 +38,86 @@ def start_screen():
 
 box_image = load_image('box.png')
 fon_image = load_image('tetris.png')
+line_imege = load_image('check_line.png')
+
+
+class Line(pygame.sprite.Sprite):
+    def __init__(self, y, group):
+        super().__init__(group)
+        self.image = line_imege
+        self.rect = self.image.get_rect()
+        self.rect = self.rect.move(15, y)
+        self.bal = 0
+
+    def check(self):
+        colliding_quantity = 0
+        for collide_test in tiles_group:
+            if pygame.sprite.collide_mask(self, collide_test):
+                colliding_quantity += 1
+        if colliding_quantity == 10:
+            pygame.sprite.spritecollide(self, tiles_group, dokill=True)
+            self.bal += 100
+            redowning = pygame.sprite.Group()
+            for picsel in tiles_group:
+                if picsel.down():
+                    redowning.add(picsel)
+            for pic in redowning:
+                if pic.down():
+                    redowning.clear(pic)
+
+    def bals(self):
+        return self.bal
+
+    def down(self):
+        pass
+
+
+class Checking_sistem:
+    def __init__(self):
+        self.line1 = Line(485, check_group)
+        self.line2 = Line(455, check_group)
+        self.line3 = Line(425, check_group)
+        self.line4 = Line(395, check_group)
+        self.line5 = Line(365, check_group)
+        self.line6 = Line(335, check_group)
+        self.line7 = Line(305, check_group)
+        self.line8 = Line(275, check_group)
+        self.line9 = Line(245, check_group)
+        self.line10 = Line(215, check_group)
+        self.line11 = Line(185, check_group)
+        self.line12 = Line(155, check_group)
+        self.line13 = Line(125, check_group)
+        self.line14 = Line(95, check_group)
+        self.line_check = Line(515, check_group)
+        self.line = Line(545, all_sprites)
+
+    def check(self):
+        self.line1.check()
+        self.line2.check()
+        self.line3.check()
+        self.line4.check()
+        self.line5.check()
+        self.line6.check()
+        self.line7.check()
+        self.line8.check()
+        self.line9.check()
+        self.line10.check()
+        self.line11.check()
+        self.line12.check()
+        self.line13.check()
+        self.line14.check()
+        return self.line_check.bals()
 
 
 class Fon(pygame.sprite.Sprite):
     def __init__(self):
-        super().__init__(tiles_group, all_sprites)
+        super().__init__(all_sprites)
         self.image = fon_image
         self.rect = self.image.get_rect()
         self.rect = self.rect.move(-5, -5)
+
+    def down(self):
+        pass
 
 
 class Picsel(pygame.sprite.Sprite):
@@ -60,7 +132,7 @@ class Picsel(pygame.sprite.Sprite):
 
     def movecontrol(self):
         colliding_quantity = -1
-        for collide_test in tiles_group:
+        for collide_test in all_sprites:
             if pygame.sprite.collide_mask(self, collide_test):
                 colliding_quantity += 1
         if colliding_quantity:
@@ -70,7 +142,7 @@ class Picsel(pygame.sprite.Sprite):
     def down(self):
         self.rect = self.rect.move(0, 30)
         colliding_quantity = -1
-        for collide_test in tiles_group:
+        for collide_test in all_sprites:
             if pygame.sprite.collide_mask(self, collide_test):
                 colliding_quantity += 1
         if colliding_quantity:
@@ -81,7 +153,7 @@ class Picsel(pygame.sprite.Sprite):
     def left(self):
         self.rect = self.rect.move(-30, 0)
         colliding_quantity = -1
-        for collide_test in tiles_group:
+        for collide_test in all_sprites:
             if pygame.sprite.collide_mask(self, collide_test):
                 colliding_quantity += 1
         if colliding_quantity:
@@ -92,7 +164,7 @@ class Picsel(pygame.sprite.Sprite):
     def right(self):
         self.rect = self.rect.move(30, 0)
         colliding_quantity = -1
-        for collide_test in tiles_group:
+        for collide_test in all_sprites:
             if pygame.sprite.collide_mask(self, collide_test):
                 colliding_quantity += 1
         if colliding_quantity:
@@ -100,51 +172,54 @@ class Picsel(pygame.sprite.Sprite):
             return True
         return False
 
+    def line(self, y):
+        self.rect.y = y
+
 
 class Figure:
     def __init__(self, figure_type):
         self.figure_type = figure_type
         if self.figure_type == 'Z1':
-            self.pics1 = Picsel(90, 10)
-            self.pics2 = Picsel(120, 10)
-            self.pics3 = Picsel(120, 40)
-            self.pics4 = Picsel(150, 40)
+            self.pics1 = Picsel(90, 20)
+            self.pics2 = Picsel(120, 20)
+            self.pics3 = Picsel(120, 50)
+            self.pics4 = Picsel(150, 50)
             self.rotate = 1
         if self.figure_type == 'Z2':
-            self.pics1 = Picsel(120, 10)
-            self.pics2 = Picsel(150, 10)
-            self.pics3 = Picsel(90, 40)
-            self.pics4 = Picsel(120, 40)
+            self.pics1 = Picsel(120, 20)
+            self.pics2 = Picsel(150, 20)
+            self.pics3 = Picsel(90, 50)
+            self.pics4 = Picsel(120, 50)
             self.rotate = 1
         if self.figure_type == 'L1':
-            self.pics1 = Picsel(90, 10)
-            self.pics2 = Picsel(120, 10)
-            self.pics3 = Picsel(150, 10)
-            self.pics4 = Picsel(150, 40)
+            self.pics1 = Picsel(90, 20)
+            self.pics2 = Picsel(120, 20)
+            self.pics3 = Picsel(150, 20)
+            self.pics4 = Picsel(150, 50)
             self.rotate = 1
         if self.figure_type == 'L2':
-            self.pics1 = Picsel(90, 10)
-            self.pics2 = Picsel(120, 10)
-            self.pics3 = Picsel(150, 10)
-            self.pics4 = Picsel(90, 40)
+            self.pics1 = Picsel(90, 20)
+            self.pics2 = Picsel(120, 20)
+            self.pics3 = Picsel(150, 20)
+            self.pics4 = Picsel(90, 50)
             self.rotate = 1
         if self.figure_type == 'T':
-            self.pics1 = Picsel(90, 10)
-            self.pics2 = Picsel(120, 10)
-            self.pics3 = Picsel(150, 10)
-            self.pics4 = Picsel(120, 40)
+            self.pics1 = Picsel(90, 20)
+            self.pics2 = Picsel(120, 20)
+            self.pics3 = Picsel(150, 20)
+            self.pics4 = Picsel(120, 50)
             self.rotate = 1
         if self.figure_type == 'I':
-            self.pics1 = Picsel(90, 10)
-            self.pics2 = Picsel(120, 10)
-            self.pics3 = Picsel(150, 10)
-            self.pics4 = Picsel(180, 10)
+            self.pics1 = Picsel(90, 20)
+            self.pics2 = Picsel(120, 20)
+            self.pics3 = Picsel(150, 20)
+            self.pics4 = Picsel(180, 20)
             self.rotate = 1
         if self.figure_type == 'rect':
-            self.pics1 = Picsel(120, 10)
-            self.pics2 = Picsel(150, 10)
-            self.pics3 = Picsel(120, 40)
-            self.pics4 = Picsel(150, 40)
+            self.pics1 = Picsel(120, 20)
+            self.pics2 = Picsel(150, 20)
+            self.pics3 = Picsel(120, 50)
+            self.pics4 = Picsel(150, 50)
             self.rotate = 1
 
     def turn(self):
@@ -197,28 +272,28 @@ class Figure:
         if self.figure_type == 'L1':
             if self.rotate == 1:
                 self.pics1.move(30, -30)
-                self.pics3.move(-30, 30)
-                self.pics4.move(-60, 0)
+                self.pics3.move(-60, 30)
+                self.pics4.move(-30, 0)
                 if self.pics4.movecontrol() and self.pics3.movecontrol() \
                         and self.pics2.movecontrol() and self.pics1.movecontrol():
                     self.rotate = 2
                 else:
                     self.pics1.move(-30, 30)
-                    self.pics3.move(30, -30)
-                    self.pics4.move(60, 0)
+                    self.pics3.move(60, -30)
+                    self.pics4.move(30, 0)
             elif self.rotate == 2:
                 self.pics1.move(-30, 0)
                 self.pics2.move(-30, 0)
-                self.pics3.move(0, -30)
-                self.pics4.move(60, -30)
+                self.pics3.move(30, -30)
+                self.pics4.move(30, -30)
                 if self.pics4.movecontrol() and self.pics3.movecontrol() \
                         and self.pics2.movecontrol() and self.pics1.movecontrol():
                     self.rotate = 3
                 else:
                     self.pics1.move(30, 0)
                     self.pics2.move(30, 0)
-                    self.pics3.move(0, 30)
-                    self.pics4.move(-60, 30)
+                    self.pics3.move(30, 30)
+                    self.pics4.move(-30, 30)
             elif self.rotate == 3:
                 self.pics1.move(30, 0)
                 self.pics2.move(60, -30)

@@ -1,6 +1,6 @@
 import random
 import pygame
-from engine import load_image, start_screen, Fon, Figure, all_sprites,tiles_group
+from engine import load_image, start_screen, Fon, Figure, tiles_group, Checking_sistem, all_sprites
 
 pygame.init()
 fps = 1
@@ -14,7 +14,8 @@ next_figure = random.choice(figures)
 figure = Figure(next_figure)
 next_figure = random.choice(figures)
 fon = Fon()
-s = start_screen()
+start_screen()
+check = Checking_sistem()
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -30,11 +31,12 @@ while running:
                 figure = Figure(next_figure)
                 next_figure = random.choice(figures)
     screen.fill((0, 0, 0))
+    check.check()
     if figure.down():
         figure = Figure(next_figure)
         next_figure = random.choice(figures)
-    all_sprites.draw(screen)
     tiles_group.draw(screen)
+    all_sprites.draw(screen)
     pygame.display.flip()
     clock.tick(fps)
 #####
